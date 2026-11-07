@@ -40,7 +40,7 @@ section{padding:48px 0}h2{font-size:clamp(16px,3.4vw,24px);margin:0 0 8px}.sub{c
 .why i{font-size:34px;font-style:normal}.why h3{margin:8px 0 4px;font-size:17px}.why p{margin:0;color:var(--mut);font-size:14px}
 .sobre{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:28px}
 footer{border-top:1px solid var(--bd);padding:28px 0;color:var(--mut);font-size:13px;text-align:center}
-.empty{color:var(--mut)}.ver{margin-left:auto;padding:4px 8px;border:1px solid var(--bd);border-radius:5px;font-size:12px;color:var(--mut);white-space:nowrap}
+.empty{color:var(--mut)}.warn{margin:0;padding:8px 10px;border:1px solid #d9a21b;border-radius:6px;background:rgba(217,162,27,.12);color:#f3c74f;font-size:13px}.ver{margin-left:auto;padding:4px 8px;border:1px solid var(--bd);border-radius:5px;font-size:12px;color:var(--mut);white-space:nowrap}
 </style></head>
 <body>
 <header><div class="wrap"><a class="logo" href="#inicio"><svg viewBox="0 0 16 16" width="30" height="30" shape-rendering="crispEdges" aria-hidden="true"><rect x="1" y="1" width="14" height="14" fill="#0b0f0d"/><rect x="2" y="2" width="12" height="12" fill="#2fd45a"/><rect x="2" y="2" width="2" height="12" fill="#1e9a3f"/><rect x="14" y="3" width="1" height="10" fill="#f1f5f2"/><rect x="5" y="4" width="7" height="6" fill="#2f7bff"/><rect x="5" y="4" width="7" height="1" fill="#6fa3ff"/><rect x="6" y="8" width="1" height="1" fill="#f1f5f2"/><rect x="7" y="7" width="1" height="1" fill="#f1f5f2"/><rect x="8" y="8" width="1" height="1" fill="#f1f5f2"/><rect x="9" y="5" width="1" height="1" fill="#ff4a4a"/><rect x="11" y="5" width="1" height="1" fill="#ff4a4a"/><rect x="10" y="6" width="1" height="1" fill="#ff4a4a"/><rect x="9" y="7" width="1" height="1" fill="#ff4a4a"/><rect x="11" y="7" width="1" height="1" fill="#ff4a4a"/><rect x="5" y="11" width="7" height="1" fill="#0b0f0d"/><rect x="5" y="12" width="4" height="1" fill="#0b0f0d"/></svg>MC Map Book</a>
@@ -55,7 +55,7 @@ footer{border-top:1px solid var(--bd);padding:28px 0;color:var(--mut);font-size:
 
 <section><div class="wrap"><h2>Featured Maps</h2><p class="sub">Discover some of our most popular maps.</p><div class="grid" id="destaque"></div></div></section>
 <section id="java"><div class="wrap"><h2>Java Maps</h2><p class="sub">For players on PC with Minecraft Java Edition.</p><div class="grid" id="lj"></div></div></section>
-<section id="bedrock"><div class="wrap"><h2>Bedrock Maps</h2><p class="sub">For mobile, console and Windows with Minecraft Bedrock.</p><div class="grid" id="lb"></div></div></section>
+<section id="bedrock"><div class="wrap"><h2>Bedrock Maps</h2><p class="sub">For mobile, console and Windows with Minecraft Bedrock.</p><p class="warn" style="margin:-8px 0 20px">⚠️ Our maps do not work on Bedrock PE (Pocket Edition).</p><div class="grid" id="lb"></div></div></section>
 
 <section><div class="wrap"><h2 style="margin-bottom:24px">Why choose MC Map Book?</h2>
 <div class="why"><div><i>⭐</i><h3>Guaranteed quality</h3><p>Maps tested before they reach you.</p></div>
@@ -72,15 +72,16 @@ footer{border-top:1px solid var(--bd);padding:28px 0;color:var(--mut);font-size:
    ed: "java" ou "bedrock"
    link: endereço da página de compra (https://...). Deixe "" se ainda não tem.
    img: endereço de uma imagem do mapa (ex.: "imagens/castelo.png"). Deixe "" para usar a cor.
+   aviso: (opcional) texto de aviso que aparece no cartão. Apague o campo se não precisar.
    c1 / c2: cores do fundo quando não há imagem. */
 const MAPAS=[
  {nome:"CMG Park Beta v1.0.0",ed:"java",preco:"$1.00",desc:"CMG Park map for Minecraft Java Edition.",link:"https://mauricio6544.itch.io/cmg-mapa-java-edition",img:"",c1:"#0f4d2a",c2:"#2fd45a",emoji:"🎡"},
- {nome:"CMG Park Beta v1.0.0",ed:"bedrock",preco:"$1.00",desc:"CMG Park map for Minecraft Bedrock Edition.",link:"https://mauricio6544.itch.io/cmg-mapa",img:"",c1:"#10204a",c2:"#2f7bff",emoji:"🎡"}
+ {nome:"CMG Park Beta v1.0.0",ed:"bedrock",preco:"$1.00",desc:"CMG Park map for Minecraft Bedrock Edition.",aviso:"Does not work on Bedrock PE (Pocket Edition).",link:"https://mauricio6544.itch.io/cmg-mapa",img:"",c1:"#10204a",c2:"#2f7bff",emoji:"🎡"}
 ];
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function card(m){
  const ok=/^https?:\/\//.test(m.link);
- return '<div class="card"><div class="pic" style="--c1:'+m.c1+';--c2:'+m.c2+'">'+(m.img?'<img alt="'+esc(m.nome)+'" src="'+esc(m.img)+'">':m.emoji||"⛏️")+'<span class="tag '+m.ed+'">'+(m.ed==="java"?"Java":"Bedrock")+'</span></div><div class="info"><h3>'+esc(m.nome)+'</h3><p>'+esc(m.desc)+'</p><div class="row"><span class="price">'+esc(m.preco)+'</span>'+(ok?'<a class="buy" target="_blank" rel="noopener" href="'+esc(m.link)+'">🛒 Buy</a>':'<span class="buy" style="color:var(--mut)">Coming soon</span>')+'</div></div></div>';
+ return '<div class="card"><div class="pic" style="--c1:'+m.c1+';--c2:'+m.c2+'">'+(m.img?'<img alt="'+esc(m.nome)+'" src="'+esc(m.img)+'">':m.emoji||"⛏️")+'<span class="tag '+m.ed+'">'+(m.ed==="java"?"Java":"Bedrock")+'</span></div><div class="info"><h3>'+esc(m.nome)+'</h3><p>'+esc(m.desc)+'</p>'+(m.aviso?'<p class="warn">⚠️ '+esc(m.aviso)+'</p>':'')+'<div class="row"><span class="price">'+esc(m.preco)+'</span>'+(ok?'<a class="buy" target="_blank" rel="noopener" href="'+esc(m.link)+'">🛒 Buy</a>':'<span class="buy" style="color:var(--mut)">Coming soon</span>')+'</div></div></div>';
 }
 const fill=(id,list)=>{document.getElementById(id).innerHTML=list.length?list.map(card).join(""):'<p class="empty">No maps here yet. Come back soon!</p>'};
 fill("destaque",MAPAS);fill("lj",MAPAS.filter(m=>m.ed==="java"));fill("lb",MAPAS.filter(m=>m.ed==="bedrock"));
